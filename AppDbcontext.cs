@@ -15,7 +15,7 @@ namespace MyApi.Data
         public DbSet<Employee> employee => Set<Employee>();
         public DbSet<User> Users => Set<User>();
         public DbSet<TypeMaster> TypeMasters => Set<TypeMaster>();
-        public DbSet<Income> Incomes => Set<Income>();
+        public DbSet<Income> Income => Set<Income>();
         public DbSet<Expense> Expenses => Set<Expense>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

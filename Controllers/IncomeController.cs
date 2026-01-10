@@ -15,7 +15,7 @@ namespace SmartWallet.Controllers
         [HttpGet("{userId}")]
         public async Task<IActionResult> GetByUser(int userId)
         {
-            return Ok(await _context.Incomes
+            return Ok(await _context.Income
                 .Where(x => x.UserId == userId && x.TypeId == 1)
                 //.Include(x => x.Type)
                 .ToListAsync());
@@ -24,7 +24,7 @@ namespace SmartWallet.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Income income)
         {
-            _context.Incomes.Add(income);
+            _context.Income.Add(income);
             await _context.SaveChangesAsync();
             return Ok(income);
         }
@@ -33,7 +33,7 @@ namespace SmartWallet.Controllers
         public async Task<IActionResult> Update(int id, Income income)
         {
             if (id != income.IncomeId) return BadRequest();
-            _context.Incomes.Update(income);
+            _context.Income.Update(income);
             await _context.SaveChangesAsync();
             return Ok(income);
         }
@@ -41,10 +41,10 @@ namespace SmartWallet.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var income = await _context.Incomes.FindAsync(id);
+            var income = await _context.Income.FindAsync(id);
             if (income == null) return NotFound();
 
-            _context.Incomes.Remove(income);
+            _context.Income.Remove(income);
             await _context.SaveChangesAsync();
             return Ok();
         }
