@@ -13,7 +13,6 @@ namespace SmartWallet.Controllers
         public LoginController(IUserService userService) => _userService = userService;
 
         // POST api/users/login
-        // Authenticates a user. Returns limited user info on success.
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto logindto)
         {
@@ -24,7 +23,6 @@ namespace SmartWallet.Controllers
         }
 
         // POST api/users/register
-        // Creates a new user. Returns limited user info.
         [HttpPost("register")]
             public async Task<IActionResult> Create([FromBody] CreateUserDto dto)
         {

@@ -21,7 +21,7 @@ namespace SmartWallet.Services
 
         public async Task<UserDto?> AuthenticateAsync(LoginDto login)
         {
-            var user = await _repo.GetByCredentialsAsync(login.Username, login.PasswordHash, login.Email);
+            var user = await _repo.GetByCredentialsAsync(login.Username, login.PasswordHash);
             if (user == null) return null;
 
             return MapToDto(user);

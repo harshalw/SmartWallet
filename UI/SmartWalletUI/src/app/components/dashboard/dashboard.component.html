@@ -1,0 +1,53 @@
+<div class="dashboard-container">
+  <nav class="navbar">
+    <div class="navbar-content">
+      <h1 class="logo">SmartWallet</h1>
+      <div class="nav-right">
+        <span class="user-info">👋 Welcome, <strong>{{ currentUser?.username }}</strong></span>
+        <button (click)="logout()" class="btn-logout">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="dashboard-content">
+    <div class="welcome-section">
+      <h2>Welcome to Your Dashboard</h2>
+      <p>You have successfully logged in!</p>
+      
+      <div class="user-details">
+        <h3>Your Information</h3>
+        <div class="details-card">
+          <p><strong>Username:</strong> {{ currentUser?.username }}</p>
+          <p *ngIf="currentUser?.email"><strong>Email:</strong> {{ currentUser?.email }}</p>
+          <p><strong>Status:</strong> <span class="status-badge">Logged In</span></p>
+        </div>
+      </div>
+
+      <div class="features-section">
+        <h3>SmartWallet Features</h3>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">💳</div>
+            <h4>Wallet Management</h4>
+            <p>Manage your digital wallets and transactions</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h4>Analytics</h4>
+            <p>Track your spending and financial insights</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🔒</div>
+            <h4>Security</h4>
+            <p>Your data is protected with industry standards</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h4>Quick Payments</h4>
+            <p>Make fast and secure transactions instantly</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

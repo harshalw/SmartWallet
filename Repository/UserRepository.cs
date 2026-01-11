@@ -9,12 +9,12 @@ namespace SmartWallet.Repositories
         private readonly AppDbContext _context;
         public UserRepository(AppDbContext context) => _context = context;
 
-        public async Task<User?> GetByCredentialsAsync(string username, string passwordHash, string email)
+        public async Task<User?> GetByCredentialsAsync(string username, string passwordHash)
         {
             return await _context.Users
                 .AsNoTracking()
                 .FirstOrDefaultAsync(u =>
-                    u.Username == username && u.PasswordHash == passwordHash && u.Email == email);
+                    u.Username == username && u.PasswordHash == passwordHash);
         }
 
         public async Task<bool> ExistsAsync(string username, string email)
