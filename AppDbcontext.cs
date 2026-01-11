@@ -1,5 +1,4 @@
-﻿using DockerDeep;
-using DockerDeep.Model;
+﻿
 using Microsoft.EntityFrameworkCore;
 using SmartWallet.Models;
 
@@ -12,7 +11,6 @@ namespace MyApi.Data
             : base(options)
         { }
 
-        public DbSet<Employee> employee => Set<Employee>();
         public DbSet<User> Users => Set<User>();
         public DbSet<TypeMaster> TypeMasters => Set<TypeMaster>();
         public DbSet<Income> Income => Set<Income>();
