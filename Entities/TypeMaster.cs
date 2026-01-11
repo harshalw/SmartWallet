@@ -10,8 +10,7 @@ namespace SmartWallet.Entities
         public string? Description { get; set; }
         public bool IsActive { get; set; } = true;
 
-        public ICollection<Income>? Incomes { get; set; }
-        public ICollection<Expense>? Expenses { get; set; }
+      
     }
 
 }

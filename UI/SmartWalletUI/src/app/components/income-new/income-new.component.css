@@ -1,0 +1,11 @@
+.income-container { display:flex; justify-content:center; align-items:flex-start; padding:24px; }
+.income-card { width:100%; max-width:560px; background:white; border-radius:10px; padding:20px; box-shadow:0 8px 40px rgba(0,0,0,0.08); }
+.income-card h2 { margin-top:0 }
+.income-form { display:flex; flex-direction:column; gap:12px }
+.income-form label { font-weight:600; font-size:14px }
+.income-form input, .income-form select { padding:10px; border-radius:6px; border:1px solid #ddd }
+.actions { display:flex; gap:10px; margin-top:10px }
+.btn { padding:10px 14px; background:linear-gradient(90deg,#667eea,#764ba2); color:#fff; border:none; border-radius:6px; cursor:pointer }
+.btn.secondary { background:#eee; color:#333 }
+.error { background:#fee; color:#c33; padding:10px; border-radius:6px }
+.success { background:#efe; color:#0a6; padding:10px; border-radius:6px }

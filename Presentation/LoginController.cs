@@ -19,7 +19,7 @@ namespace SmartWallet.Controllers
             if (logindto == null) return BadRequest();
             var user = await _userService.AuthenticateAsync(logindto);
             if (user == null) return NotFound();
-            return Ok();
+            return Ok(user);
         }
 
         // POST api/users/register

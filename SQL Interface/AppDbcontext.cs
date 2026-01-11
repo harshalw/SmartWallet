@@ -12,7 +12,7 @@ namespace MyApi.Data
         { }
 
         public DbSet<User> Users => Set<User>();
-        public DbSet<TypeMaster> TypeMasters => Set<TypeMaster>();
+        public DbSet<TypeMaster> TypeMaster => Set<TypeMaster>();
         public DbSet<Income> Income => Set<Income>();
         public DbSet<Expense> Expenses => Set<Expense>();
 

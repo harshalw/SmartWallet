@@ -13,7 +13,7 @@ import { AuthService } from '../../services/auth.service';
 export class DashboardComponent implements OnInit {
   currentUser: any = null;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, public router: Router) {}
 
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser();
