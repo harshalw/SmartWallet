@@ -8,28 +8,34 @@ namespace SmartWallet.Controllers
 {
     [ApiController]
     [Route("api/users")]
-    public class UsersController : ControllerBase
+    public class LoginController : ControllerBase
     {
         private readonly AppDbContext _context;
-        public UsersController(AppDbContext context) => _context = context;
+        public LoginController(AppDbContext context) => _context = context;
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetEmployees()
+        [HttpPost]
+        public async Task<IActionResult> Exist(User user)
         {
-            var employees = await _context.Users.ToListAsync();
-            return Ok(User);
+            var login = await _context.Users
+                .FirstOrDefaultAsync(x => x.Username == user.Username && x.PasswordHash == user.PasswordHash
+                && x.Email == user.Email);
+            if (login == null) return NotFound();
+
+            return Ok(login);
         }
-       
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
-        {
-            var user = await _context.Users.FindAsync(id);
-            return user == null ? NotFound() : Ok(user);
-        }
+
 
         [HttpPost]
         public async Task<IActionResult> Create(User user)
         {
+            if (user == null) return BadRequest();
+
+            var exists = await _context.Users
+                .AnyAsync(u => u.Username == user.Username || u.Email == user.Email);
+
+            if (exists)
+                return Conflict(new { message = "Duplicate user" });
+
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
             return Ok(user);
@@ -53,6 +59,13 @@ namespace SmartWallet.Controllers
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
             return Ok();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            return user == null ? NotFound() : Ok(user);
         }
     }
 
