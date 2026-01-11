@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SmartWallet.Models
+namespace SmartWallet.Entities
 {
     public class Expense
     {

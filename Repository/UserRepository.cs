@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MyApi.Data;
-using SmartWallet.Models;
+using SmartWallet.Entities;
 
 namespace SmartWallet.Repositories
 {

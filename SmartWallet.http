@@ -1,6 +1,0 @@
-@SmartWallet_HostAddress = http://localhost:5125
-
-GET {{SmartWallet_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

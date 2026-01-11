@@ -1,5 +1,5 @@
 using SmartWallet.DTO;
-using SmartWallet.Models;
+using SmartWallet.Entities;
 using SmartWallet.Repositories;
 
 namespace SmartWallet.Services

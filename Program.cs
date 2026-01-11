@@ -1,8 +1,8 @@
-    using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SmartWallet.Repositories;
 using SmartWallet.Services;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args );
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -11,11 +11,17 @@ builder.Services.AddSwaggerGen();
 
 // DbContext
 builder.Services.AddDbContext<MyApi.Data.AppDbContext>(options =>
-    options.UseSqlServer(builder?.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// DI: repository + service
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IUserService, UserService>();
+// DI: repository + service (users already registered)
+builder.Services.AddScoped<IIncomeRepository, IncomeRepository>();
+builder.Services.AddScoped<IIncomeService, IncomeService>();
+
+builder.Services.AddScoped<IExpenseRepository, ExpenseRepository>();
+builder.Services.AddScoped<IExpenseService, ExpenseService>();
+
+builder.Services.AddScoped<ITypeMasterRepository, TypeMasterRepository>();
+builder.Services.AddScoped<ITypeMasterService, TypeMasterService>();
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 

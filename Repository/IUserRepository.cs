@@ -1,4 +1,4 @@
-using SmartWallet.Models;
+using SmartWallet.Entities;
 
 namespace SmartWallet.Repositories
 {
