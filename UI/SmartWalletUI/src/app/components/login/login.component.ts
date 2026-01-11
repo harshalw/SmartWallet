@@ -73,8 +73,14 @@ export class LoginComponent {
     }).subscribe({
       next: (response) => {
         this.loading.set(false);
-        // If we get a response (200 status), registration was successful
-        this.router.navigate(['/dashboard']);
+        // Clear form fields after successful registration
+        this.registerUsername.set('');
+        this.registerEmail.set('');
+        this.registerPassword.set('');
+        // Toggle back to login form
+        this.showRegister.set(false);
+        // Show success message
+        this.error.set('Registration successful! Please login with your credentials.');
       },
       error: (err) => {
         this.loading.set(false);
