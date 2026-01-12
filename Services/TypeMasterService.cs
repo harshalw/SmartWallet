@@ -17,8 +17,23 @@ namespace SmartWallet.Services
                 TypeId = t.TypeId,
                 TypeName = t.TypeName,
                 Description = t.Description,
+               // IsIncome = t.IsIncome,
                 IsActive = t.IsActive
-            });
+            }).Where(x=>x.IsIncome == true
+            );
+        }
+
+        public async Task<IEnumerable<TypeMasterDto>> GetAllExpenseTypesAsync()
+        {
+            var items = await _repo.GetAllAsync();
+            return items.Select(t => new TypeMasterDto
+            {
+                TypeId = t.TypeId,
+                TypeName = t.TypeName,
+                Description = t.Description,
+                //IsIncome = t.IsIncome,
+                IsActive = t.IsActive
+            }).Where(x => x.IsIncome == false);
         }
 
         public async Task<TypeMasterDto?> GetByIdAsync(int id)
