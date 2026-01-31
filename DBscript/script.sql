@@ -13,6 +13,7 @@ CREATE TABLE TypeMaster (
     TypeId INT IDENTITY(1,1) PRIMARY KEY,
     TypeName VARCHAR(50) NOT NULL,  -- 'Salary', 'Groceries', etc.
     Description VARCHAR(255),
+    [IsIncome] BIT DEFAULT 1,
     IsActive BIT DEFAULT 1
 );
 
