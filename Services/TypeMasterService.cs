@@ -17,7 +17,7 @@ namespace SmartWallet.Services
                 TypeId = t.TypeId,
                 TypeName = t.TypeName,
                 Description = t.Description,
-               // IsIncome = t.IsIncome,
+               IsIncome = t.IsIncome,
                 IsActive = t.IsActive
             }).Where(x=>x.IsIncome == true
             );
@@ -31,7 +31,7 @@ namespace SmartWallet.Services
                 TypeId = t.TypeId,
                 TypeName = t.TypeName,
                 Description = t.Description,
-                //IsIncome = t.IsIncome,
+                IsIncome = t.IsIncome,
                 IsActive = t.IsActive
             }).Where(x => x.IsIncome == false);
         }

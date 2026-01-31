@@ -15,6 +15,10 @@ namespace SmartWallet.Controllers
         public async Task<IActionResult> GetAll() =>
             Ok(await _service.GetAllAsync());
 
+        [HttpGet("expenses")]
+        public async Task<IActionResult> GetAllExpenseTypes() =>
+            Ok(await _service.GetAllExpenseTypesAsync());
+
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
