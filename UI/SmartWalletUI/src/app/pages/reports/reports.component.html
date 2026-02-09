@@ -1,0 +1,23 @@
+<h2>Monthly Report</h2>
+
+<table border="1" cellpadding="8">
+  <thead>
+    <tr>
+      <th>Year</th>
+      <th>Month</th>
+      <th>Total Income</th>
+      <th>Total Expenses</th>
+      <th>Net Savings</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let r of reports">
+      <td>{{ r.year }}</td>
+      <td>{{ r.month }}</td>
+      <td>{{ r.totalIncome }}</td>
+      <td>{{ r.totalExpenses }}</td>
+      <td>{{ r.net }}</td>
+    </tr>
+  </tbody>
+</table>
