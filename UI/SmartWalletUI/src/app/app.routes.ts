@@ -3,6 +3,7 @@ import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { IncomeNewComponent } from './components/income-new/income-new.component';
 import { ExpenseNewComponent } from './components/expense-new/expense-new.component';
+import { ReportsComponent } from './pages/reports/reports.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -10,5 +11,6 @@ export const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'income/new', component: IncomeNewComponent },
   { path: 'expense/new', component: ExpenseNewComponent },
+  { path: 'reports', component:ReportsComponent},
   { path: '**', redirectTo: '/login' }
 ];

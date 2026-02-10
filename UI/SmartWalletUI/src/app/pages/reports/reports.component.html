@@ -1,23 +1,102 @@
-<h2>Monthly Report</h2>
+<div class="reports-page">
 
-<table border="1" cellpadding="8">
-  <thead>
-    <tr>
-      <th>Year</th>
-      <th>Month</th>
-      <th>Total Income</th>
-      <th>Total Expenses</th>
-      <th>Net Savings</th>
-    </tr>
-  </thead>
+  <!-- Generate Button -->
+  <div class="generate-btn-container">
+    <button class="generate-btn" (click)="loadReports()">
+      🔄 Generate Report
+    </button>
+  </div>
 
-  <tbody>
-    <tr *ngFor="let r of reports">
-      <td>{{ r.year }}</td>
-      <td>{{ r.month }}</td>
-      <td>{{ r.totalIncome }}</td>
-      <td>{{ r.totalExpenses }}</td>
-      <td>{{ r.net }}</td>
-    </tr>
-  </tbody>
-</table>
+
+  <!-- Summary Cards -->
+  <div class="summary-container">
+    <div class="summary-card income">
+      <h4>Total Income</h4>
+      <p>₹ {{ totalIncome }}</p>
+    </div>
+
+    <div class="summary-card expense">
+      <h4>Total Expense</h4>
+      <p>₹ {{ totalExpense }}</p>
+    </div>
+
+    <div class="summary-card balance"
+         [ngClass]="balance >= 0 ? 'positive' : 'negative'">
+      <h4>Balance</h4>
+      <p>₹ {{ balance }}</p>
+    </div>
+  </div>
+
+  <!-- Income Table -->
+  <h3 class="section-title">Income Report</h3>
+
+  <table class="report-table" *ngIf="incomeReports.length > 0; else noIncome">
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th class="amount">Total Amount (₹)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of incomeReports">
+        <td>{{ item.category }}</td>
+        <td class="amount">{{ item.totalAmount }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #noIncome>
+    <p class="empty-text">No income records found.</p>
+  </ng-template>
+
+  <!-- Expense Table -->
+  <h3 class="section-title">Expense Report</h3>
+
+  <table class="report-table" *ngIf="expenseReports.length > 0; else noExpense">
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th class="amount">Total Amount (₹)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of expenseReports">
+        <td>{{ item.category }}</td>
+        <td class="amount">{{ item.totalAmount }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #noExpense>
+    <p class="empty-text">No expense records found.</p>
+  </ng-template>
+
+  
+  <button class="generate-btn" (click)="downloadExcel()">Download Excel </button>
+
+  <button class="generate-btn pdf" (click)="downloadPDF()">Download PDF </button>
+
+<div class="charts-section">
+  <div class="chart-card" *ngIf="showIncomeChart">
+    <h3>Income Distribution</h3>
+    <canvas
+      baseChart
+      [data]="incomeChartData"
+      [type]="chartType">
+    </canvas>
+  </div>
+
+  <div class="chart-card" *ngIf="showExpenseChart">
+    <h3>Expense Distribution</h3>
+    <canvas
+      baseChart
+      [data]="expenseChartData"
+      [type]="chartType">
+    </canvas>
+  </div>
+
+  
+
+</div>
+
+</div>
