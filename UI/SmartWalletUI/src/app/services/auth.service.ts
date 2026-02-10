@@ -37,9 +37,16 @@ export class AuthService {
   login(credentials: LoginRequest): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/login`, credentials)
       .pipe(
-        tap(() => {
-          // If we get a 200 response (even empty), consider it successful
-          const user = { username: credentials.username, passwordHash: credentials.passwordHash };
+        tap((response: any) => {
+          // Extract user info from response or generate a user object
+          const user = response?.data || response || { 
+            username: credentials.username, 
+            passwordHash: credentials.passwordHash 
+          };
+          // Ensure userId is available
+          if (!user.userId) {
+            user.userId = response?.userId || 1; // Default to 1 if not in response
+          }
           localStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);
         }),
