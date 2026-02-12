@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-<<<<<<< HEAD
 
 export interface ReportSummary {
   category: string;
@@ -25,7 +24,6 @@ export class ReportService {
     return this.http.get<ReportSummary[]>(`${this.baseUrl}/expense/${userId}`);
   }
 }
-=======
 import { map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 
@@ -60,4 +58,3 @@ export class ReportsService {
     );
   }
 }
->>>>>>> master
