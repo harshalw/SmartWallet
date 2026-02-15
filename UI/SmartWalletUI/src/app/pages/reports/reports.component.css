@@ -1,142 +1,75 @@
-/* Page background */
-.reports-page {
+.reports-container {
   min-height: 100vh;
-  padding: 20px;
-  background: linear-gradient(135deg, #ede7f6, #f3e5f5);
+  width: 100%;
+  padding: 40px;
+  background: linear-gradient(135deg, #e6f9c9, #fff9c4);
+  box-sizing: border-box;
+  text-align: center;
 }
 
-/* Generate button */
-.generate-btn-container {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 20px;
+h2 {
+  color: #2e7d32;
+  margin-top: 20px;
 }
 
-.generate-btn {
-  background: linear-gradient(135deg, #7b1fa2, #4a148c);
+.back-btn {
+  background: linear-gradient(45deg, #66bb6a, #43a047);
   color: white;
+  padding: 10px 22px;
   border: none;
-  padding: 10px 18px;
-  font-size: 14px;
+  border-radius: 8px;
   font-weight: 600;
-  border-radius: 6px;
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(123, 31, 162, 0.35);
+  margin-bottom: 20px;
+  transition: 0.3s;
 }
 
-/* Summary cards */
-.summary-container {
-  display: flex;
-  gap: 20px;
+.back-btn:hover {
+  transform: scale(1.05);
+}
+
+.violet-btn {
+  background: linear-gradient(45deg, #7b2cbf, #5a189a);
+  color: white;
+  padding: 8px 18px;
+  border: none;
+  border-radius: 6px;
+  margin: 10px 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.violet-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Medium Chart Box */
+.chart-wrapper {
+  width: 420px;
+  height: 420px;
+  margin: 30px auto;
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.export-section {
   margin-bottom: 30px;
 }
 
-.summary-card {
-  flex: 1;
-  padding: 16px;
-  border-radius: 10px;
-  background: white;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-}
-
-.summary-card h4 {
-  margin-bottom: 8px;
-  color: #5e2ca5;
-}
-
-.summary-card p {
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.summary-card.income {
-  border-left: 6px solid #2ecc71;
-}
-
-.summary-card.expense {
-  border-left: 6px solid #e74c3c;
-}
-
-.summary-card.balance.positive {
-  border-left: 6px solid #3498db;
-}
-
-.summary-card.balance.negative {
-  border-left: 6px solid #e74c3c;
-}
-
-/* Tables */
-.section-title {
+.goal-input {
   margin-top: 20px;
-  margin-bottom: 10px;
-  color: #4a148c;
 }
 
-.report-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: white;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-}
-
-.report-table th,
-.report-table td {
-  padding: 12px;
-  border-bottom: 1px solid #ddd;
-}
-
-.report-table th {
-  background: #f3e5f5;
-  font-weight: 600;
-}
-
-.amount {
-  text-align: right;
-}
-
-.empty-text {
-  color: #777;
-  font-style: italic;
-}
-
-/* Charts */
-.charts-section {
-  display: flex;
-  gap: 30px;
-  justify-content: center;
-  margin-top: 40px;
-  flex-wrap: wrap;
-}
-
-.chart-card {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  width: 420px;
-  height: 420px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-  text-align: center;
-}
-
-.chart-card h3 {
-  margin-bottom: 16px;
-  color: #5e2ca5;
-}
-
-/* 🔥 MOST IMPORTANT */
-.chart-card canvas {
-  width: 100% !important;
-  height: 300px !important;
-  display: block;
-}
-
-.generate-btn.pdf{
-  background: #8e44ad;
-  color:#fff;
-}
-
-.generate-btn.pdf:hover{
-  background: #732d91;
+.goal-input input {
+  padding: 8px;
+  margin: 5px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
 }

@@ -1,102 +1,37 @@
-<div class="reports-page">
+<div class="reports-container">
 
-  <!-- Generate Button -->
-  <div class="generate-btn-container">
-    <button class="generate-btn" (click)="loadReports()">
-      🔄 Generate Report
-    </button>
+  <button class="back-btn" (click)="backToDashboard()">
+    Back to Dashboard
+  </button>
+
+  <h2>Monthly Financial Report</h2>
+
+  <button class="violet-btn" (click)="generateReport()">
+    Generate Report
+  </button>
+
+  <!-- Chart Wrapper -->
+  <div class="chart-wrapper">
+    <canvas id="monthlyCanvas"></canvas>
   </div>
 
-
-  <!-- Summary Cards -->
-  <div class="summary-container">
-    <div class="summary-card income">
-      <h4>Total Income</h4>
-      <p>₹ {{ totalIncome }}</p>
-    </div>
-
-    <div class="summary-card expense">
-      <h4>Total Expense</h4>
-      <p>₹ {{ totalExpense }}</p>
-    </div>
-
-    <div class="summary-card balance"
-         [ngClass]="balance >= 0 ? 'positive' : 'negative'">
-      <h4>Balance</h4>
-      <p>₹ {{ balance }}</p>
-    </div>
+  <div class="export-section">
+    <button class="violet-btn" (click)="exportExcel()">Download Excel</button>
+    <button class="violet-btn" (click)="exportPDF()">Download PDF</button>
   </div>
 
-  <!-- Income Table -->
-  <h3 class="section-title">Income Report</h3>
+  <hr>
 
-  <table class="report-table" *ngIf="incomeReports.length > 0; else noIncome">
-    <thead>
-      <tr>
-        <th>Category</th>
-        <th class="amount">Total Amount (₹)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of incomeReports">
-        <td>{{ item.category }}</td>
-        <td class="amount">{{ item.totalAmount }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <h2>Savings Goals</h2>
 
-  <ng-template #noIncome>
-    <p class="empty-text">No income records found.</p>
-  </ng-template>
-
-  <!-- Expense Table -->
-  <h3 class="section-title">Expense Report</h3>
-
-  <table class="report-table" *ngIf="expenseReports.length > 0; else noExpense">
-    <thead>
-      <tr>
-        <th>Category</th>
-        <th class="amount">Total Amount (₹)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of expenseReports">
-        <td>{{ item.category }}</td>
-        <td class="amount">{{ item.totalAmount }}</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <ng-template #noExpense>
-    <p class="empty-text">No expense records found.</p>
-  </ng-template>
-
-  
-  <button class="generate-btn" (click)="downloadExcel()">Download Excel </button>
-
-  <button class="generate-btn pdf" (click)="downloadPDF()">Download PDF </button>
-
-<div class="charts-section">
-  <div class="chart-card" *ngIf="showIncomeChart">
-    <h3>Income Distribution</h3>
-    <canvas
-      baseChart
-      [data]="incomeChartData"
-      [type]="chartType">
-    </canvas>
+  <div class="goal-input">
+    <input [(ngModel)]="newGoalTitle" placeholder="Goal Title">
+    <input type="number" [(ngModel)]="newGoalAmount" placeholder="Amount">
+    <button class="violet-btn" (click)="addSavingsGoal()">Add Goal</button>
   </div>
 
-  <div class="chart-card" *ngIf="showExpenseChart">
-    <h3>Expense Distribution</h3>
-    <canvas
-      baseChart
-      [data]="expenseChartData"
-      [type]="chartType">
-    </canvas>
+  <div class="chart-wrapper">
+    <canvas id="savingsCanvas"></canvas>
   </div>
-
-  
-
-</div>
 
 </div>

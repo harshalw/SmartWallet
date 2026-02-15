@@ -1,170 +1,140 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Chart, registerables, ChartData, ChartType } from 'chart.js';
-import { BaseChartDirective } from 'ng2-charts';
-import { ReportService, ReportSummary } from '../../services/reports.service';
-import * as XLSX from 'xlsx';
-import * as FileSaver from 'file-saver';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ReportsService, MonthlyReport } from '../../services/reports.service';
+import Chart from 'chart.js/auto';
 import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
-
-// 🔥 VERY IMPORTANT
-Chart.register(...registerables);
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-reports',
   standalone: true,
-  imports: [CommonModule, BaseChartDirective],
+  imports: [CommonModule, FormsModule],
   templateUrl: './reports.component.html',
   styleUrls: ['./reports.component.css']
 })
 export class ReportsComponent implements OnInit {
 
-  userId = 1;
+  monthlyReports: MonthlyReport[] = [];
+  selectedReport!: MonthlyReport;
 
-  incomeReports: ReportSummary[] = [];
-  expenseReports: ReportSummary[] = [];
+  monthlyChart: any;
+  savingsChart: any;
 
-  totalIncome = 0;
-  totalExpense = 0;
-  balance = 0;
-  
-  showIncomeChart = false;
-showExpenseChart = false;
+  savingsGoals: { title: string; amount: number }[] = [];
+  newGoalTitle: string = '';
+  newGoalAmount: number = 0;
 
-  chartType: ChartType = 'pie';
-
-  incomeChartData: ChartData<'pie'> = {
-    labels: [],
-    datasets: [{
-      data: [],
-      backgroundColor: ['#2ecc71', '#27ae60', '#1abc9c', '#16a085']
-    }]
-  };
-
-  expenseChartData: ChartData<'pie'> = {
-    labels: [],
-    datasets: [{
-      data: [],
-      backgroundColor: ['#e74c3c', '#c0392b', '#ff6b6b', '#ff7675']
-    }]
-  };
-
-  constructor(private reportService: ReportService) {}
+  constructor(
+    private reportsService: ReportsService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.loadReports();
+    const userId = 1;
+
+    this.reportsService.getMonthlyReports(userId)
+      .subscribe(data => {
+        this.monthlyReports = data;
+        if (data.length > 0) {
+          this.selectedReport = data[data.length-1];
+        }
+      });
   }
 
-  loadReports(): void {
-    this.reportService.getIncomeReport(this.userId).subscribe(res => {
-      this.incomeReports = res;
-      this.calculateSummary();
-      this.updateCharts();
+  generateReport() {
+    if (!this.selectedReport) return;
+
+    if (this.monthlyChart) this.monthlyChart.destroy();
+
+    this.monthlyChart = new Chart('monthlyCanvas', {
+      type: 'pie',
+      data: {
+        labels: ['Income', 'Expense', 'Balance'],
+        datasets: [{
+          data: [
+            this.selectedReport.totalIncome,
+            this.selectedReport.totalExpense,
+            this.selectedReport.netBalance
+          ],
+          backgroundColor: ['#00c853', '#d50000', '#2962ff']
+        }]
+      },
+      options: {
+        animation: {
+          animateRotate: true,
+          duration: 1500
+        }
+      }
+    });
+  }
+
+  addSavingsGoal() {
+    if (!this.newGoalTitle || this.newGoalAmount <= 0) return;
+
+    this.savingsGoals.push({
+      title: this.newGoalTitle,
+      amount: this.newGoalAmount
     });
 
-    this.reportService.getExpenseReport(this.userId).subscribe(res => {
-      this.expenseReports = res;
-      this.calculateSummary();
-      this.updateCharts();
+    this.newGoalTitle = '';
+    this.newGoalAmount = 0;
+
+    this.generateSavingsChart();
+  }
+
+  generateSavingsChart() {
+    if (this.savingsChart) this.savingsChart.destroy();
+
+    this.savingsChart = new Chart('savingsCanvas', {
+      type: 'pie',
+      data: {
+        labels: this.savingsGoals.map(g => g.title),
+        datasets: [{
+          data: this.savingsGoals.map(g => g.amount),
+          backgroundColor: ['#7b2ff7', '#f107a3', '#ff6f00', '#00bfa5']
+        }]
+      }
     });
   }
-   
-    downloadExcel(): void {
 
-  const incomeSheet = XLSX.utils.json_to_sheet(this.incomeReports);
-  const expenseSheet = XLSX.utils.json_to_sheet(this.expenseReports);
+  exportPDF() {
+    const doc = new jsPDF();
 
-  const workbook: XLSX.WorkBook = {
-    Sheets: {
-      Income: incomeSheet,
-      Expense: expenseSheet
-    },
-    SheetNames: ['Income', 'Expense']
-  };
+    doc.setFontSize(16);
+    doc.text('Monthly Financial Report', 20, 20);
 
-  const excelBuffer = XLSX.write(workbook, {
-    bookType: 'xlsx',
-    type: 'array'
-  });
+    let y = 35;
 
-  const data: Blob = new Blob([excelBuffer], {
-    type: 'application/octet-stream'
-  });
+    this.monthlyReports.forEach(r => {
+      doc.text(
+        `Month: ${r.month}/${r.year} | Income: ${r.totalIncome} | Expense: ${r.totalExpense} | Balance: ${r.netBalance}`,
+        20,
+        y
+      );
+      y += 10;
+    });
 
-  FileSaver.saveAs(data, 'SmartWallet_Report.xlsx');
-}
-
-downloadPDF(): void {
-  const doc = new jsPDF();
-
-  // Title
-  doc.setFontSize(16);
-  doc.text('SmartWallet Report', 14, 15);
-
-  // Summary
-  doc.setFontSize(11);
-  doc.text(`Total Income: ₹ ${this.totalIncome}`, 14, 25);
-  doc.text(`Total Expense: ₹ ${this.totalExpense}`, 14, 32);
-  doc.text(`Balance: ₹ ${this.balance}`, 14, 39);
-
-  // Income Table
-  autoTable(doc, {
-    startY: 48,
-    head: [['Income Category', 'Amount (₹)']],
-    body: this.incomeReports.map(i => [i.category, i.totalAmount]),
-    theme: 'grid',
-    headStyles: { fillColor: [46, 204, 113] }
-  });
-
-  // Expense Table
-  autoTable(doc, {
-    startY: (doc as any).lastAutoTable.finalY + 10,
-    head: [['Expense Category', 'Amount (₹)']],
-    body: this.expenseReports.map(e => [e.category, e.totalAmount]),
-    theme: 'grid',
-    headStyles: { fillColor: [231, 76, 60] }
-  });
-
-  doc.save('SmartWallet_Report.pdf');
-}
-
-  calculateSummary(): void {
-    this.totalIncome = this.incomeReports.reduce((s, i) => s + i.totalAmount, 0);
-    this.totalExpense = this.expenseReports.reduce((s, e) => s + e.totalAmount, 0);
-    this.balance = this.totalIncome - this.totalExpense;
+    doc.save('Financial_Report.pdf');
   }
 
- updateCharts(): void {
+  exportExcel() {
+    const data = this.monthlyReports.map(r => ({
+      Month: `${r.month}/${r.year}`,
+      Income: r.totalIncome,
+      Expense: r.totalExpense,
+      Balance: r.netBalance
+    }));
 
-  // 🔴 reset first (important)
-  this.showIncomeChart = false;
-  this.showExpenseChart = false;
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Report');
 
-  // ✅ IMMUTABLE assignment (KEY FIX)
-  this.incomeChartData = {
-    labels: this.incomeReports.map(i => i.category),
-    datasets: [{
-      data: this.incomeReports.map(i => i.totalAmount),
-      backgroundColor: ['#2ecc71', '#27ae60', '#1abc9c', '#16a085']
-    }]
-  };
+    XLSX.writeFile(wb, 'Financial_Report.xlsx');
+  }
 
-  this.expenseChartData = {
-    labels: this.expenseReports.map(e => e.category),
-    datasets: [{
-      data: this.expenseReports.map(e => e.totalAmount),
-      backgroundColor: ['#e74c3c', '#c0392b', '#ff6b6b', '#ff7675']
-    }]
-  };
-
-  // 🔥 render AFTER data ready
-  setTimeout(() => {
-    this.showIncomeChart = true;
-    this.showExpenseChart = true;
-  });
-
-
-
-}
+  backToDashboard() {
+    this.router.navigate(['/dashboard']);
+  }
 }
