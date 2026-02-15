@@ -1,0 +1,75 @@
+.reports-container {
+  min-height: 100vh;
+  width: 100%;
+  padding: 40px;
+  background: linear-gradient(135deg, #e6f9c9, #fff9c4);
+  box-sizing: border-box;
+  text-align: center;
+}
+
+h2 {
+  color: #2e7d32;
+  margin-top: 20px;
+}
+
+.back-btn {
+  background: linear-gradient(45deg, #66bb6a, #43a047);
+  color: white;
+  padding: 10px 22px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: 0.3s;
+}
+
+.back-btn:hover {
+  transform: scale(1.05);
+}
+
+.violet-btn {
+  background: linear-gradient(45deg, #7b2cbf, #5a189a);
+  color: white;
+  padding: 8px 18px;
+  border: none;
+  border-radius: 6px;
+  margin: 10px 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.violet-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Medium Chart Box */
+.chart-wrapper {
+  width: 420px;
+  height: 420px;
+  margin: 30px auto;
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.export-section {
+  margin-bottom: 30px;
+}
+
+.goal-input {
+  margin-top: 20px;
+}
+
+.goal-input input {
+  padding: 8px;
+  margin: 5px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}

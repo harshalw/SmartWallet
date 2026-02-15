@@ -1,0 +1,37 @@
+<div class="reports-container">
+
+  <button class="back-btn" (click)="backToDashboard()">
+    Back to Dashboard
+  </button>
+
+  <h2>Monthly Financial Report</h2>
+
+  <button class="violet-btn" (click)="generateReport()">
+    Generate Report
+  </button>
+
+  <!-- Chart Wrapper -->
+  <div class="chart-wrapper">
+    <canvas id="monthlyCanvas"></canvas>
+  </div>
+
+  <div class="export-section">
+    <button class="violet-btn" (click)="exportExcel()">Download Excel</button>
+    <button class="violet-btn" (click)="exportPDF()">Download PDF</button>
+  </div>
+
+  <hr>
+
+  <h2>Savings Goals</h2>
+
+  <div class="goal-input">
+    <input [(ngModel)]="newGoalTitle" placeholder="Goal Title">
+    <input type="number" [(ngModel)]="newGoalAmount" placeholder="Amount">
+    <button class="violet-btn" (click)="addSavingsGoal()">Add Goal</button>
+  </div>
+
+  <div class="chart-wrapper">
+    <canvas id="savingsCanvas"></canvas>
+  </div>
+
+</div>
